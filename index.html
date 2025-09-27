@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotelBook - Your Perfect Stay Awaits</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-hotel"></i>
+                <span>HotelBook</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#" class="nav-link" data-route="home">Home</a>
+                <a href="#" class="nav-link" data-route="hotels">Hotels</a>
+                <div class="nav-auth">
+                    <button class="btn btn--outline btn--sm" id="loginBtn">Login</button>
+                    <button class="btn btn--primary btn--sm" id="registerBtn">Register</button>
+                </div>
+                <div class="nav-user" style="display: none;">
+                    <div class="user-dropdown">
+                        <button class="user-toggle">
+                            <i class="fas fa-user-circle"></i>
+                            <span id="userNameDisplay"></span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="#" data-route="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                            <a href="#" data-route="admin" id="adminLink" style="display: none;"><i class="fas fa-cog"></i> Admin Panel</a>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Home Page -->
+        <div id="home" class="page">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Find Your Perfect Stay</h1>
+                    <p>Discover amazing hotels around the world with the best prices and service.</p>
+                    
+                    <!-- Search Form -->
+                    <div class="search-form">
+                        <div class="search-field">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" id="searchLocation" placeholder="Where are you going?" />
+                        </div>
+                        <div class="search-field">
+                            <i class="fas fa-calendar"></i>
+                            <input type="date" id="checkInDate" />
+                        </div>
+                        <div class="search-field">
+                            <i class="fas fa-calendar"></i>
+                            <input type="date" id="checkOutDate" />
+                        </div>
+                        <div class="search-field">
+                            <i class="fas fa-users"></i>
+                            <select id="guestCount">
+                                <option value="1">1 Guest</option>
+                                <option value="2">2 Guests</option>
+                                <option value="3">3 Guests</option>
+                                <option value="4">4 Guests</option>
+                                <option value="5">5+ Guests</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn--primary" id="searchBtn">
+                            <i class="fas fa-search"></i>
+                            Search Hotels
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Featured Hotels -->
+            <section class="featured-hotels">
+                <div class="container">
+                    <h2>Featured Hotels</h2>
+                    <div class="hotels-grid" id="featuredHotels">
+                        <!-- Dynamic content -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Why Choose Us -->
+            <section class="why-choose-us">
+                <div class="container">
+                    <h2>Why Choose HotelBook?</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <i class="fas fa-dollar-sign"></i>
+                            <h3>Best Price Guarantee</h3>
+                            <p>We guarantee the lowest prices on hotel bookings worldwide.</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-clock"></i>
+                            <h3>24/7 Customer Support</h3>
+                            <p>Our customer service team is available around the clock to help you.</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>Secure Booking</h3>
+                            <p>Your personal and payment information is always protected.</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-star"></i>
+                            <h3>Quality Guaranteed</h3>
+                            <p>We partner with only the best hotels to ensure your satisfaction.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Hotels Page -->
+        <div id="hotels" class="page" style="display: none;">
+            <div class="container">
+                <div class="hotels-header">
+                    <h1>Find Your Perfect Hotel</h1>
+                    <div class="search-results-info">
+                        <span id="resultsCount">0 hotels found</span>
+                    </div>
+                </div>
+
+                <div class="hotels-layout">
+                    <!-- Filters Sidebar -->
+                    <aside class="filters-sidebar">
+                        <div class="filter-section">
+                            <h3>Price Range</h3>
+                            <div class="price-range">
+                                <input type="range" id="minPrice" min="0" max="1000" value="0" />
+                                <input type="range" id="maxPrice" min="0" max="1000" value="1000" />
+                                <div class="price-labels">
+                                    <span>$<span id="minPriceLabel">0</span></span>
+                                    <span>$<span id="maxPriceLabel">1000</span></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="filter-section">
+                            <h3>Rating</h3>
+                            <div class="rating-filters">
+                                <label><input type="checkbox" value="5" /> 5 Stars</label>
+                                <label><input type="checkbox" value="4" /> 4+ Stars</label>
+                                <label><input type="checkbox" value="3" /> 3+ Stars</label>
+                            </div>
+                        </div>
+
+                        <div class="filter-section">
+                            <h3>Amenities</h3>
+                            <div class="amenity-filters">
+                                <label><input type="checkbox" value="WiFi" /> WiFi</label>
+                                <label><input type="checkbox" value="Pool" /> Pool</label>
+                                <label><input type="checkbox" value="Gym" /> Gym</label>
+                                <label><input type="checkbox" value="Spa" /> Spa</label>
+                                <label><input type="checkbox" value="Restaurant" /> Restaurant</label>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <!-- Hotels List -->
+                    <div class="hotels-content">
+                        <div class="sort-bar">
+                            <select id="sortBy" class="form-control">
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="rating">Rating</option>
+                                <option value="name">Name</option>
+                            </select>
+                        </div>
+
+                        <div class="hotels-list" id="hotelsList">
+                            <!-- Dynamic content -->
+                        </div>
+
+                        <div class="pagination" id="pagination">
+                            <!-- Dynamic pagination -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hotel Detail Page -->
+        <div id="hotel-detail" class="page" style="display: none;">
+            <!-- Dynamic content -->
+        </div>
+
+        <!-- Booking Page -->
+        <div id="booking" class="page" style="display: none;">
+            <!-- Dynamic content -->
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard" class="page" style="display: none;">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h1>My Dashboard</h1>
+                </div>
+                <div class="dashboard-tabs">
+                    <button class="tab-btn active" data-tab="bookings">My Bookings</button>
+                    <button class="tab-btn" data-tab="profile">Profile</button>
+                    <button class="tab-btn" data-tab="favorites">Favorites</button>
+                </div>
+                <div class="dashboard-content">
+                    <div id="bookings-tab" class="tab-content active">
+                        <div class="bookings-list" id="userBookings">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                    <div id="profile-tab" class="tab-content">
+                        <div class="profile-form">
+                            <h3>Update Profile</h3>
+                            <form id="profileForm">
+                                <div class="form-group">
+                                    <label class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="profileName" required />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="profileEmail" required />
+                                </div>
+                                <button type="submit" class="btn btn--primary">Update Profile</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div id="favorites-tab" class="tab-content">
+                        <div class="favorites-list" id="favoritesList">
+                            <p>You haven't added any favorites yet.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="admin" class="page" style="display: none;">
+            <div class="container">
+                <div class="admin-header">
+                    <h1>Admin Panel</h1>
+                </div>
+                <div class="admin-tabs">
+                    <button class="tab-btn active" data-tab="overview">Overview</button>
+                    <button class="tab-btn" data-tab="hotels-mgmt">Hotels</button>
+                    <button class="tab-btn" data-tab="bookings-mgmt">Bookings</button>
+                    <button class="tab-btn" data-tab="users-mgmt">Users</button>
+                </div>
+                <div class="admin-content">
+                    <div id="overview-tab" class="tab-content active">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <i class="fas fa-hotel"></i>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="totalHotels">0</span>
+                                    <span class="stat-label">Total Hotels</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-calendar-check"></i>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="totalBookings">0</span>
+                                    <span class="stat-label">Total Bookings</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-dollar-sign"></i>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="totalRevenue">$0</span>
+                                    <span class="stat-label">Total Revenue</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-users"></i>
+                                <div class="stat-info">
+                                    <span class="stat-value" id="totalUsers">0</span>
+                                    <span class="stat-label">Total Users</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="charts-section">
+                            <div class="chart-container">
+                                <h3>Monthly Bookings</h3>
+                                <canvas id="bookingsChart" style="position: relative; height: 300px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="hotels-mgmt-tab" class="tab-content">
+                        <div class="mgmt-header">
+                            <h3>Hotel Management</h3>
+                            <button class="btn btn--primary" id="addHotelBtn">Add New Hotel</button>
+                        </div>
+                        <div class="hotels-mgmt-list" id="hotelsMgmt">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                    <div id="bookings-mgmt-tab" class="tab-content">
+                        <h3>Booking Management</h3>
+                        <div class="bookings-mgmt-list" id="bookingsMgmt">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                    <div id="users-mgmt-tab" class="tab-content">
+                        <h3>User Management</h3>
+                        <div class="users-mgmt-list" id="usersMgmt">
+                            <!-- Dynamic content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-hotel"></i> HotelBook</h4>
+                    <p>Your trusted partner for finding the perfect accommodation worldwide.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#" data-route="home">Home</a></li>
+                        <li><a href="#" data-route="hotels">Hotels</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Customer Service</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-envelope"></i> info@hotelbook.com</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 HotelBook. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login to Your Account</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" id="loginEmail" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" id="loginPassword" required />
+                </div>
+                <button type="submit" class="btn btn--primary btn--full-width">Login</button>
+            </form>
+            <p class="modal-footer">Don't have an account? <a href="#" id="switchToRegister">Register here</a></p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Account</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="registerName" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" id="registerEmail" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" id="registerPassword" required />
+                </div>
+                <button type="submit" class="btn btn--primary btn--full-width">Register</button>
+            </form>
+            <p class="modal-footer">Already have an account? <a href="#" id="switchToLogin">Login here</a></p>
+        </div>
+    </div>
+
+    <!-- Add Hotel Modal -->
+    <div id="addHotelModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Hotel</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="addHotelForm">
+                <div class="form-group">
+                    <label class="form-label">Hotel Name</label>
+                    <input type="text" class="form-control" id="hotelName" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Location</label>
+                    <input type="text" class="form-control" id="hotelLocation" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Base Price</label>
+                    <input type="number" class="form-control" id="hotelPrice" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" id="hotelDescription" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn--primary btn--full-width">Add Hotel</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
